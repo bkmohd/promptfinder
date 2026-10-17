@@ -1,6 +1,0 @@
-# PromptFoundry — static site, no build step.
-# Every page is pre-built HTML/CSS/JS in this folder (self-contained, no CDN).
-# Publish the folder that contains this file. That's all Netlify needs to do.
-
-[build]
-  publish = "."
