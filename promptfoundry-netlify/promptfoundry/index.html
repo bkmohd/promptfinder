@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PromptFoundry — Field-tested AI prompts + a model-aware prompt builder</title>
+<meta name="description" content="A tested prompt library, a model-aware prompt builder and a prompt doctor. 26 field-tested prompts for 14 roles, dated and re-run on GPT-6.1, Claude Sonnet 5.5, Gemini 3.8, Grok 4.7, Midjourney V8.2 and GPT Image 2.5.">
+<link rel="canonical" href="https://promptfoundry.example/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PromptFoundry — Prompts that survive the upgrade">
+<meta property="og:description" content="A tested prompt library, a model-aware builder, and a doctor for the prompts you already wrote.">
+<meta property="og:url" content="https://promptfoundry.example/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2315120D'/%3E%3Cpath d='M16 7v18M7 16h18M9.6 9.6l12.8 12.8M22.4 9.6L9.6 22.4' stroke='%23F5F0E6' stroke-width='1.6' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='3.2' fill='%23E34A1B'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "PromptFoundry",
+  "url": "https://promptfoundry.example",
+  "description": "Field-tested AI prompts, a model-aware prompt builder and a prompt grader.",
+  "publisher": { "@type": "Organization", "name": "PromptFoundry", "url": "https://promptfoundry.example" }
+}
+</script>
+</head>
+<body data-page="home" data-depth="0">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="index.html" aria-label="PromptFoundry home">
+      <svg class="mark" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="#15120D"/><path d="M14 6.6v14.8M6.6 14h14.8M8.8 8.8l10.4 10.4M19.2 8.8L8.8 19.2" stroke="#F5F0E6" stroke-width="1.4" stroke-linecap="round"/><circle cx="14" cy="14" r="2.7" fill="#E34A1B"/></svg>
+      promptfoundry <span class="beta">beta</span>
+    </a>
+    <div class="nav-drop">
+      <button class="nav-drop-btn" data-drop aria-expanded="false" aria-controls="navDropPanel">Browse
+        <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="nav-drop-panel" id="navDropPanel">
+        <div class="ndp-col">
+          <span class="ndp-label">Browse by prompt type</span>
+          <div data-drop-cats>
+            <a class="ndp-item" href="library.html?category=writing"><i class="ndp-dot" style="background:#C15F3C"></i>Writing<span class="ndp-c">6</span></a>
+            <a class="ndp-item" href="library.html?category=growth"><i class="ndp-dot" style="background:#0E8F6E"></i>Sales & growth<span class="ndp-c">4</span></a>
+            <a class="ndp-item" href="library.html?category=code"><i class="ndp-dot" style="background:#3B6FE0"></i>Engineering<span class="ndp-c">3</span></a>
+            <a class="ndp-item" href="library.html?category=analysis"><i class="ndp-dot" style="background:#A96800"></i>Analysis<span class="ndp-c">3</span></a>
+            <a class="ndp-item" href="library.html?category=design"><i class="ndp-dot" style="background:#5B4B8A"></i>Design<span class="ndp-c">2</span></a>
+            <a class="ndp-item" href="library.html?category=learning"><i class="ndp-dot" style="background:#7C4A6B"></i>Learning<span class="ndp-c">2</span></a>
+            <a class="ndp-item" href="library.html?category=people"><i class="ndp-dot" style="background:#2E5E8C"></i>People<span class="ndp-c">2</span></a>
+            <a class="ndp-item" href="library.html?category=everyday"><i class="ndp-dot" style="background:#8A5A2B"></i>Everyday<span class="ndp-c">4</span></a>
+          </div>
+        </div>
+        <div class="ndp-col">
+          <span class="ndp-label">Pages</span>
+          <a class="ndp-item" href="library.html">Full library</a>
+          <a class="ndp-item" href="index.html#builder" aria-current="page">Prompt Studio</a>
+          <a class="ndp-item" href="roles.html">Role pages</a>
+          <a class="ndp-item" href="guides.html">Guides</a>
+          <a class="ndp-item" href="how-we-test.html">How we test</a>
+          <a class="ndp-item" href="about.html">About</a>
+        </div>
+      </div>
+    </div>
+    <form class="nav-search" role="search" action="library.html" method="get">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="navSearch" name="q" type="search" placeholder="Search prompts…" aria-label="Search prompts" autocomplete="off">
+      <button type="button" class="mic-btn nav-mic" data-voice-target="navSearch" title="Dictate your search" aria-label="Dictate your search by voice">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>
+      </button>
+    </form>
+    <div class="nav-actions">
+      <a class="btn small dark nav-cta-desktop" href="index.html#builder">Open Studio →</a>
+      <button class="menu-btn" data-menu aria-expanded="false" aria-controls="mobileMenu" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <span class="mm-label">Browse by prompt type</span>
+    <div class="mm-cats">
+      <a class="ndp-item" href="library.html?category=writing"><i class="ndp-dot" style="background:#C15F3C"></i>Writing</a>
+      <a class="ndp-item" href="library.html?category=growth"><i class="ndp-dot" style="background:#0E8F6E"></i>Sales & growth</a>
+      <a class="ndp-item" href="library.html?category=code"><i class="ndp-dot" style="background:#3B6FE0"></i>Engineering</a>
+      <a class="ndp-item" href="library.html?category=analysis"><i class="ndp-dot" style="background:#A96800"></i>Analysis</a>
+      <a class="ndp-item" href="library.html?category=design"><i class="ndp-dot" style="background:#5B4B8A"></i>Design</a>
+      <a class="ndp-item" href="library.html?category=learning"><i class="ndp-dot" style="background:#7C4A6B"></i>Learning</a>
+      <a class="ndp-item" href="library.html?category=people"><i class="ndp-dot" style="background:#2E5E8C"></i>People</a>
+      <a class="ndp-item" href="library.html?category=everyday"><i class="ndp-dot" style="background:#8A5A2B"></i>Everyday</a>
+    </div>
+    <span class="mm-label">Pages</span>
+    <a href="library.html">Full library</a>
+    <a href="index.html#builder" aria-current="page">Prompt Studio</a>
+    <a href="roles.html">Role pages</a>
+    <a href="guides.html">Guides</a>
+    <a href="how-we-test.html">How we test</a>
+    <a href="about.html">About</a>
+    <div class="mm-actions"><a class="btn small block" href="index.html#builder">Open the Studio →</a></div>
+  </div>
+</header>
+
+<main id="main">
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="kicker">The prompt library with a test log · Updated 17 Oct 2026</span>
+        <h1 class="display" style="max-width:none">Prompts that<br><em>survive</em> the<br>upgrade.</h1>
+        <p class="hero-sub">A tested prompt library, a model-aware builder, and a doctor for the prompts you already wrote. Most prompt lists rot in a model release — every prompt here carries a test date and a pass rate.</p>
+        <div class="hero-ctas">
+          <a class="btn" href="#builder">Build a prompt <span class="ar">→</span></a>
+          <a class="btn ghost" href="library.html">Browse <span data-stat="prompts">26</span> tested prompts</a>
+        </div>
+        <div class="hero-meta">
+          <span>Free</span><span class="dot"></span><span>No signup</span><span class="dot"></span><span><strong>6 models</strong> covered</span><span class="dot"></span><span>Every prompt dated</span>
+        </div>
+        <div class="model-row" aria-label="Models covered">
+          <span class="model-pill"><span class="mb" style="background:#0E8F6E">GP</span>ChatGPT 6.1</span>
+          <span class="model-pill"><span class="mb" style="background:#C15F3C">CL</span>Claude 5.5</span>
+          <span class="model-pill"><span class="mb" style="background:#3B6FE0">GM</span>Gemini 3.8</span>
+          <span class="model-pill"><span class="mb" style="background:#111">GK</span>Grok 4.7</span>
+          <span class="model-pill"><span class="mb" style="background:#5B4B8A">MJ</span>Midjourney 8.2</span>
+          <span class="model-pill"><span class="mb" style="background:#C2700C">GI</span>GPT Image 2.5</span>
+        </div>
+      </div>
+
+      <!-- PROMPT STUDIO -->
+      <div class="hero-figure" id="builder">
+        <span class="sticker">Model-aware · v2.4</span>
+        <div class="studio" aria-label="Prompt Studio — build a prompt">
+          <div class="studio-head">
+            <div class="studio-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+            <span class="studio-title">Prompt Studio</span>
+            <span class="studio-ver">Live build</span>
+          </div>
+          <div class="studio-body">
+            <span class="studio-label">Model</span>
+            <div class="seg" id="modelSeg" role="group" aria-label="Choose a model">
+              <button type="button" data-model="chatgpt" class="on" aria-pressed="true"><span class="mb" style="background:#0E8F6E">GP</span>ChatGPT</button>
+              <button type="button" data-model="claude" aria-pressed="false"><span class="mb" style="background:#C15F3C">CL</span>Claude</button>
+              <button type="button" data-model="gemini" aria-pressed="false"><span class="mb" style="background:#3B6FE0">GM</span>Gemini</button>
+              <button type="button" data-model="grok" aria-pressed="false"><span class="mb" style="background:#111">GK</span>Grok</button>
+              <button type="button" data-model="midjourney" aria-pressed="false"><span class="mb" style="background:#5B4B8A">MJ</span>Midjourney</button>
+              <button type="button" data-model="gptimage" aria-pressed="false"><span class="mb" style="background:#C2700C">GI</span>GPT Image</button>
+            </div>
+            <div class="studio-grid">
+              <div class="field" id="roleField">
+                <label for="bRole">Role</label>
+                <div class="select-wrap"><select id="bRole"></select></div>
+              </div>
+              <div class="field">
+                <label for="bTask">Task</label>
+                <div class="select-wrap"><select id="bTask"></select></div>
+              </div>
+              <div class="field">
+                <label for="bTone" id="toneLabel">Tone</label>
+                <div class="select-wrap"><select id="bTone"></select></div>
+              </div>
+              <div class="field">
+                <label for="bFormat" id="formatLabel">Output format</label>
+                <div class="select-wrap"><select id="bFormat"></select></div>
+              </div>
+            </div>
+            <div class="studio-grid">
+              <div class="field" style="grid-column:span 2">
+                <label for="bContext" id="contextLabel" class="voice-label"><span id="contextLabelText">Anything specific? (optional)</span><button type="button" class="mic-btn" data-voice-target="bContext" title="Dictate this field" aria-label="Dictate this field by voice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></button></label>
+                <input id="bContext" type="text" placeholder="e.g. B2B logistics, US buyers, blunt tone" autocomplete="off">
+                <span class="voice-hint" style="margin-top:7px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>or tap the mic and speak it</span>
+              </div>
+            </div>
+            <div class="studio-toggles" id="llmToggles">
+              <label class="switch"><input type="checkbox" id="bGuardrails" checked><span class="track"></span>Guardrails</label>
+              <label class="switch"><input type="checkbox" id="bClarify" checked><span class="track"></span>Ask clarifying questions</label>
+            </div>
+            <div class="field" id="stylizeField" style="display:none;margin-bottom:12px">
+              <label for="bStylize">Stylize</label>
+              <div class="select-wrap"><select id="bStylize"><option value="50">Low — 50</option><option value="180" selected>Balanced — 180</option><option value="400">High — 400</option></select></div>
+            </div>
+          </div>
+          <div class="studio-out">
+            <div class="studio-out-head"><span class="live"></span>Output · live<span class="strength" id="bStrength">strength <b>—</b></span></div>
+            <pre class="code" id="bOutput" aria-live="polite" tabindex="0"></pre>
+            <div class="studio-foot"><span id="bWords">— words</span><span class="sep"></span><span id="bVarNote"></span></div>
+            <div class="studio-actions">
+              <button class="btn" id="bCopy" style="background:var(--ember);border-color:var(--ember);color:#FFF6EC">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+                Copy prompt
+              </button>
+              <button class="btn ghost" id="bDownload" style="--btn-fg:#D9CBB6;--btn-bd:#4A3E30">Download .md</button>
+              <a class="btn ghost" id="bOpen" href="https://chatgpt.com/" target="_blank" rel="noopener" style="--btn-fg:#D9CBB6;--btn-bd:#4A3E30">Open in ChatGPT ↗</a>
+              <button class="btn ghost" id="bShuffle" style="--btn-fg:#8F8270;--btn-bd:#3B3125" title="Shuffle task, tone and format">↻ Shuffle</button>
+            </div>
+          </div>
+        </div>
+        <div class="presets">
+          <span class="plabel">Try one:</span>
+          <button class="preset" data-preset="0">Cold email</button>
+          <button class="preset" data-preset="1">Code review</button>
+          <button class="preset" data-preset="2">Study sprint</button>
+          <button class="preset" data-preset="3">Poster</button>
+          <button class="preset" data-preset="4">Product shot</button>
+          <button class="preset" data-preset="5">Newsletter</button>
+        </div>
+        <p class="small muted" id="studioNote" style="margin-top:10px;font-size:11.5px;line-height:1.5"></p>
+      </div>
+    </div>
+  </div>
+  <!-- STATS -->
+  <div class="stats-strip">
+    <div class="container">
+      <div class="stats">
+        <div class="stat"><b data-stat="prompts">26</b><span>Tested prompts</span></div>
+        <div class="stat"><b data-stat="roles">14</b><span>Role pages</span></div>
+        <div class="stat"><b data-stat="models">6</b><span>Models covered</span></div>
+        <div class="stat"><b data-stat="runs">260</b><span>Test runs in the log</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LIBRARY ================= -->
+<section class="section" id="library" style="padding-top:78px">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-title">
+        <span class="kicker">01 — The library</span>
+        <h2 class="h2">Start with what you need <em>done.</em></h2>
+      </div>
+      <p class="section-note">Browse by job, or go straight to the Studio and build one for your exact context.</p>
+    </div>
+    <div class="cat-grid" id="cat-grid"><noscript>Browse the full library at library.html.</noscript></div>
+
+    <div style="margin-top:52px">
+      <div class="section-head" style="margin-bottom:22px;align-items:flex-end">
+        <div class="section-title">
+          <h3 class="h3">Most copied this week</h3>
+          <p class="small muted">Actually tested. Pass rates from the current model cycle.</p>
+        </div>
+        <a class="link-arrow" href="library.html">All prompts →</a>
+      </div>
+      <div class="prompt-grid" id="featured-grid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROMPT DOCTOR ================= -->
+<section class="section doctor-section" id="doctor" style="padding-top:80px">
+  <div class="container">
+    <div class="doctor-grid">
+      <div class="doctor-copy">
+        <span class="kicker">02 — Prompt Doctor</span>
+        <h2 class="h2">Your prompt is probably <em>fine.</em><br>Fine is the problem.</h2>
+        <p class="lede" style="font-size:16px">Paste any prompt you already use. The doctor scores it against nine things models actually need, then tells you what to fix first. Nothing leaves your browser.</p>
+        <ul class="doctor-points">
+          <li><span class="n">1</span><div><b>Nine checks, one score.</b> Role, objective, context, format, constraints, variables, examples, quality bar and clarity.</div></li>
+          <li><span class="n">2</span><div><b>No black box.</b> Every failed check comes with the fix, in plain language.</div></li>
+          <li><span class="n">3</span><div><b>Instant, private.</b> The scoring runs locally. Your prompt never hits a server.</div></li>
+        </ul>
+        <a class="link-arrow" href="#builder" style="align-self:flex-start">Take the fixes into the Studio →</a>
+      </div>
+      <div class="doctor-tool">
+        <div class="doctor-head"><span class="dt">Prompt Doctor</span><span class="status"><i></i>Local · instant</span></div>
+        <div class="doctor-body">
+          <label for="doctorText" class="studio-label voice-label" style="color:var(--muted)">Paste a prompt you already use<button type="button" class="mic-btn" data-voice-target="doctorText" title="Dictate your prompt" aria-label="Dictate your prompt by voice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></button></label>
+          <textarea id="doctorText" placeholder="e.g. Write a launch email for our new pricing page. Make it good and engaging…" spellcheck="false"></textarea>
+          <div class="doctor-row">
+            <button class="btn small" id="doctorRun">Grade this prompt</button>
+            <button class="btn ghost small" id="doctorSample">Try a weak one</button>
+            <span class="voice-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>or dictate it</span>
+            <span class="count" id="doctorCount">0 words · 0 characters</span>
+          </div>
+        </div>
+        <div class="doctor-result" id="doctorResult" aria-live="polite">
+          <div class="score-row">
+            <div class="ring">
+              <svg width="92" height="92" viewBox="0 0 92 92" aria-hidden="true">
+                <circle class="bg" cx="46" cy="46" r="34"></circle>
+                <circle class="fg" id="ringFg" cx="46" cy="46" r="34"></circle>
+              </svg>
+              <span class="score" id="doctorScore">0</span>
+            </div>
+            <div class="score-label"><b id="doctorLabel">—</b><span id="doctorSub"></span></div>
+          </div>
+          <div class="checks" id="doctorChecks"></div>
+          <div class="doctor-fix" id="doctorFix"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TEST LAB ================= -->
+<section class="section" id="lab">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-title">
+        <span class="kicker">03 — The test lab</span>
+        <h2 class="h2">No prompt ships without a <em>test date.</em></h2>
+      </div>
+      <p class="section-note">New models every few weeks. A prompt without a test log is just a rumour.</p>
+    </div>
+    <div class="lab-grid">
+      <div>
+        <p class="lede" style="font-size:16px">Every prompt in the library is run on current models with the same inputs, scored against one rubric, and re-tested when a model changes. The score you see is the last cycle, not a launch-week screenshot.</p>
+        <div class="method-list">
+          <div class="method-item">
+            <span class="mi-num">01</span>
+            <div><h4>Run it ten times, same inputs.</h4><p>Ten generations per prompt, per model, with identical filled variables. We log the outputs instead of remembering the best one.</p></div>
+          </div>
+          <div class="method-item">
+            <span class="mi-num">02</span>
+            <div><h4>Score against one rubric.</h4><p>Forty points across four criteria: works without edits, follows the format, handles facts safely and sounds like the brief. Pass rate is reported honestly, including the failures.</p></div>
+          </div>
+          <div class="method-item">
+            <span class="mi-num">03</span>
+            <div><h4>Re-test monthly, and on every release.</h4><p>When a new model version ships, the affected prompts go back on the bench. Test dates change; the URL doesn't.</p></div>
+          </div>
+        </div>
+        <a class="link-arrow" href="how-we-test.html" style="margin-top:8px">Read the full methodology →</a>
+      </div>
+      <div>
+        <div class="rubric-card">
+          <div class="rubric-head"><b>The rubric</b><span>40 points · 4 criteria</span></div>
+          <div class="rubric-row"><div class="rw">Works without edits</div><div class="wt"><span class="wbar"><i style="width:100%"></i></span>15</div></div>
+          <div class="rubric-row"><div class="rw">Follows the requested format</div><div class="wt"><span class="wbar"><i style="width:67%"></i></span>10</div></div>
+          <div class="rubric-row"><div class="rw">Handles facts safely</div><div class="wt"><span class="wbar"><i style="width:67%"></i></span>10</div></div>
+          <div class="rubric-row"><div class="rw">Sounds like the brief</div><div class="wt"><span class="wbar"><i style="width:33%"></i></span>5</div></div>
+          <div class="rubric-foot">Each prompt page shows its own pass rate and last test date. The aggregate below is the current cycle, October 2026.</div>
+        </div>
+        <div class="model-test-row">
+          <div class="mt-item"><span class="mb" style="background:#0E8F6E">GP</span><span class="mt-name"><b>ChatGPT</b><span>GPT-6.1</span></span><span class="mt-pass">94% pass</span></div>
+          <div class="mt-item"><span class="mb" style="background:#C15F3C">CL</span><span class="mt-name"><b>Claude</b><span>Sonnet 5.5</span></span><span class="mt-pass">96% pass</span></div>
+          <div class="mt-item"><span class="mb" style="background:#3B6FE0">GM</span><span class="mt-name"><b>Gemini</b><span>3.8 Pro</span></span><span class="mt-pass">91% pass</span></div>
+          <div class="mt-item"><span class="mb" style="background:#111">GK</span><span class="mt-name"><b>Grok</b><span>4.7</span></span><span class="mt-pass">88% pass</span></div>
+          <div class="mt-item"><span class="mb" style="background:#5B4B8A">MJ</span><span class="mt-name"><b>Midjourney</b><span>V8.2</span></span><span class="mt-pass">84% pass</span></div>
+          <div class="mt-item"><span class="mb" style="background:#C2700C">GI</span><span class="mt-name"><b>GPT Image</b><span>2.5</span></span><span class="mt-pass">90% pass</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ROLES ================= -->
+<section class="section" id="roles" style="padding-top:0">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-title">
+        <span class="kicker">04 — The role index</span>
+        <h2 class="h2">A page for every job.<br><em>Literally.</em></h2>
+      </div>
+      <p class="section-note">Role × task × model. One tested page per job — 14 live, more on the bench every week.</p>
+    </div>
+    <div class="roles-grid" id="roles-grid"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)">
+      <p class="small muted" style="max-width:56ch">Each role page pulls together the prompts for that job, the tasks worth building next, and the model notes that matter for that work.</p>
+      <a class="btn ghost small" href="roles.html">All 14 role pages →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NEWSLETTER ================= -->
+<section class="cta-band" id="newsletter">
+  <div class="container">
+    <div class="cta-inner">
+      <div>
+        <span class="kicker">The Friday drop</span>
+        <h2 class="h2" style="margin-top:16px">Five fresh prompts.<br>Tested before they ship.<br><em>Every Friday.</em></h2>
+        <p>One email, five prompts with test dates, and one model note from the lab. No listicles, no "10× your life".</p>
+      </div>
+      <div class="newsletter">
+        <form data-newsletter novalidate>
+          <label for="nlEmail">Email address</label>
+          <div class="nl-row" style="margin-top:8px">
+            <input id="nlEmail" type="email" placeholder="you@company.com" autocomplete="email" required>
+            <button class="btn light" type="submit">Get the drop →</button>
+          </div>
+          <p class="nl-note" style="margin-top:10px">Free · unsubscribe in one click · no spam</p>
+        </form>
+        <p class="nl-success">You're in. First dispatch lands Friday — check your inbox for the starter set.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="index.html" aria-label="PromptFoundry home">
+          <svg class="mark" viewBox="0 0 28 28" aria-hidden="true">
+            <rect x="1" y="1" width="26" height="26" rx="7" fill="#15120D"/>
+            <path d="M14 6.6v14.8M6.6 14h14.8M8.8 8.8l10.4 10.4M19.2 8.8L8.8 19.2" stroke="#F5F0E6" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="14" cy="14" r="2.7" fill="#E34A1B"/>
+          </svg>
+          promptfoundry
+        </a>
+        <p>Field-tested prompts, a model-aware builder and a test log. Independent — not affiliated with OpenAI, Anthropic, Google, xAI or Midjourney.</p>
+        <p class="mono" style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)">Updated 17 Oct 2026 · 26 prompts on the bench</p>
+      </div>
+      <div class="foot-col">
+        <h4>Library</h4>
+        <ul>
+          <li><a href="library.html">All prompts</a></li>
+          <li><a href="library.html?category=writing">Writing</a></li>
+          <li><a href="library.html?category=code">Engineering</a></li>
+          <li><a href="library.html?category=growth">Sales &amp; growth</a></li>
+          <li><a href="library.html?category=design">Design</a></li>
+          <li><a href="library.html?category=analysis">Analysis</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Roles</h4>
+        <ul>
+          <li><a href="roles/marketing.html">Marketers</a></li>
+          <li><a href="roles/engineering.html">Engineers</a></li>
+          <li><a href="roles/product.html">Product managers</a></li>
+          <li><a href="roles/sales.html">Sales teams</a></li>
+          <li><a href="roles/design.html">Designers</a></li>
+          <li><a href="roles.html">All role pages</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Site</h4>
+        <ul>
+          <li><a href="#builder">Prompt Studio</a></li>
+          <li><a href="#doctor">Prompt Doctor</a></li>
+          <li><a href="guides.html">Guides</a></li>
+          <li><a href="how-we-test.html">How we test</a></li>
+          <li><a href="about.html">About &amp; funding</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="mailto:hello@promptfoundry.example">Advertise / contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 PromptFoundry. Prompt test results are specific to the model versions and inputs listed on each page. Ads and affiliate links may fund the site; they never change a test score. Model names are trademarks of their owners.</p>
+      <div class="legal"><a href="privacy.html">Privacy</a><a href="how-we-test.html">Editorial standards</a><a href="about.html">About</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script src="assets/builder.js"></script>
+<script src="assets/voice.js"></script>
+</body>
+</html>

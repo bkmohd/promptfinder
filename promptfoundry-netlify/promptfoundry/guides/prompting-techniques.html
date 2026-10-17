@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seven prompting techniques that hold up — and three that don&#39;t | PromptFoundry</title>
+<meta name="description" content="Few-shot examples, decomposition, scratchpads, output schemas, negative constraints, self-checks and role framing — tested. Plus the popular techniques that quietly waste tokens.">
+<link rel="canonical" href="https://promptfoundry.example/guides/prompting-techniques.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Seven prompting techniques that hold up — and three that don&#39;t | PromptFoundry">
+<meta property="og:description" content="Few-shot examples, decomposition, scratchpads, output schemas, negative constraints, self-checks and role framing — tested. Plus the popular techniques that quietly waste tokens.">
+<meta property="og:url" content="https://promptfoundry.example/guides/prompting-techniques.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2315120D'/%3E%3Cpath d='M16 7v18M7 16h18M9.6 9.6l12.8 12.8M22.4 9.6L9.6 22.4' stroke='%23F5F0E6' stroke-width='1.6' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='3.2' fill='%23E34A1B'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../assets/styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Seven prompting techniques that hold up — and three that don't","description":"Few-shot examples, decomposition, scratchpads, output schemas, negative constraints, self-checks and role framing — tested. Plus the popular techniques that quietly waste tokens.","url":"https://promptfoundry.example/guides/prompting-techniques.html","dateModified":"2026-10-17","author":{"@type":"Organization","name":"PromptFoundry","url":"https://promptfoundry.example"},"publisher":{"@type":"Organization","name":"PromptFoundry","url":"https://promptfoundry.example"},"isPartOf":{"@type":"WebSite","name":"PromptFoundry","url":"https://promptfoundry.example"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://promptfoundry.example/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://promptfoundry.example/guides.html"},{"@type":"ListItem","position":3,"name":"Seven prompting techniques that hold up — and three that don't"}]}]}</script>
+</head>
+<body data-page="guide" data-depth="1">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="../index.html" aria-label="PromptFoundry home">
+      <svg class="mark" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="#15120D"/><path d="M14 6.6v14.8M6.6 14h14.8M8.8 8.8l10.4 10.4M19.2 8.8L8.8 19.2" stroke="#F5F0E6" stroke-width="1.4" stroke-linecap="round"/><circle cx="14" cy="14" r="2.7" fill="#E34A1B"/></svg>
+      promptfoundry <span class="beta">beta</span>
+    </a>
+    <div class="nav-drop">
+      <button class="nav-drop-btn" data-drop aria-expanded="false" aria-controls="navDropPanel">Browse
+        <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="nav-drop-panel" id="navDropPanel">
+        <div class="ndp-col">
+          <span class="ndp-label">Browse by prompt type</span>
+          <div data-drop-cats>
+            <a class="ndp-item" href="../library.html?category=writing"><i class="ndp-dot" style="background:#C15F3C"></i>Writing<span class="ndp-c">6</span></a>
+            <a class="ndp-item" href="../library.html?category=growth"><i class="ndp-dot" style="background:#0E8F6E"></i>Sales & growth<span class="ndp-c">4</span></a>
+            <a class="ndp-item" href="../library.html?category=code"><i class="ndp-dot" style="background:#3B6FE0"></i>Engineering<span class="ndp-c">3</span></a>
+            <a class="ndp-item" href="../library.html?category=analysis"><i class="ndp-dot" style="background:#A96800"></i>Analysis<span class="ndp-c">3</span></a>
+            <a class="ndp-item" href="../library.html?category=design"><i class="ndp-dot" style="background:#5B4B8A"></i>Design<span class="ndp-c">2</span></a>
+            <a class="ndp-item" href="../library.html?category=learning"><i class="ndp-dot" style="background:#7C4A6B"></i>Learning<span class="ndp-c">2</span></a>
+            <a class="ndp-item" href="../library.html?category=people"><i class="ndp-dot" style="background:#2E5E8C"></i>People<span class="ndp-c">2</span></a>
+            <a class="ndp-item" href="../library.html?category=everyday"><i class="ndp-dot" style="background:#8A5A2B"></i>Everyday<span class="ndp-c">4</span></a>
+          </div>
+        </div>
+        <div class="ndp-col">
+          <span class="ndp-label">Pages</span>
+          <a class="ndp-item" href="../library.html">Full library</a>
+          <a class="ndp-item" href="../index.html#builder">Prompt Studio</a>
+          <a class="ndp-item" href="../roles.html">Role pages</a>
+          <a class="ndp-item" href="../guides.html" aria-current="page">Guides</a>
+          <a class="ndp-item" href="../how-we-test.html">How we test</a>
+          <a class="ndp-item" href="../about.html">About</a>
+        </div>
+      </div>
+    </div>
+    <form class="nav-search" role="search" action="../library.html" method="get">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="navSearch" name="q" type="search" placeholder="Search prompts…" aria-label="Search prompts" autocomplete="off">
+      <button type="button" class="mic-btn nav-mic" data-voice-target="navSearch" title="Dictate your search" aria-label="Dictate your search by voice">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>
+      </button>
+    </form>
+    <div class="nav-actions">
+      <a class="btn small dark nav-cta-desktop" href="../index.html#builder">Open Studio →</a>
+      <button class="menu-btn" data-menu aria-expanded="false" aria-controls="mobileMenu" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <span class="mm-label">Browse by prompt type</span>
+    <div class="mm-cats">
+      <a class="ndp-item" href="../library.html?category=writing"><i class="ndp-dot" style="background:#C15F3C"></i>Writing</a>
+      <a class="ndp-item" href="../library.html?category=growth"><i class="ndp-dot" style="background:#0E8F6E"></i>Sales & growth</a>
+      <a class="ndp-item" href="../library.html?category=code"><i class="ndp-dot" style="background:#3B6FE0"></i>Engineering</a>
+      <a class="ndp-item" href="../library.html?category=analysis"><i class="ndp-dot" style="background:#A96800"></i>Analysis</a>
+      <a class="ndp-item" href="../library.html?category=design"><i class="ndp-dot" style="background:#5B4B8A"></i>Design</a>
+      <a class="ndp-item" href="../library.html?category=learning"><i class="ndp-dot" style="background:#7C4A6B"></i>Learning</a>
+      <a class="ndp-item" href="../library.html?category=people"><i class="ndp-dot" style="background:#2E5E8C"></i>People</a>
+      <a class="ndp-item" href="../library.html?category=everyday"><i class="ndp-dot" style="background:#8A5A2B"></i>Everyday</a>
+    </div>
+    <span class="mm-label">Pages</span>
+    <a href="../library.html">Full library</a>
+    <a href="../index.html#builder">Prompt Studio</a>
+    <a href="../roles.html">Role pages</a>
+    <a href="../guides.html" aria-current="page">Guides</a>
+    <a href="../how-we-test.html">How we test</a>
+    <a href="../about.html">About</a>
+    <div class="mm-actions"><a class="btn small block" href="../index.html#builder">Open the Studio →</a></div>
+  </div>
+</header>
+<main id="main">
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb" style="display:flex;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:20px"><a href="../index.html">Home</a><span>/</span><a href="../guides.html">Guides</a><span>/</span><span>Techniques</span></div>
+      <span class="kicker">Guide · Techniques · 9 min read</span>
+      <h1 class="display">Seven prompting techniques that hold up — and three that don&#39;t</h1>
+      <p class="lede">Prompt advice spreads faster than prompt evidence. These seven techniques survived our test bench across six models. The last three are the popular ones we stopped using.</p>
+    </div>
+  </section>
+  <div class="container">
+    <article class="prose">
+      
+<h2>1. Few-shot examples</h2>
+<p>One or two examples of the output you want is still the highest-leverage addition to most prompts. Examples communicate length, register, structure and edge-case handling faster than any adjective.</p>
+<ul>
+<li><strong>Use it when:</strong> the output has a house style, a specific structure, or a tone that is hard to describe.</li>
+<li><strong>Watch out:</strong> the model will copy your example's <em>content</em>, not just its shape. Pick examples whose subject matter differs from the task.</li>
+</ul>
+
+<h2>2. Decomposition</h2>
+<p>Asking for the plan first and the artefact second beats asking for both at once. "List the sections, wait for my approval, then write section one" produces better long documents than "write a 2,000-word report", because it stops the model from committing to a structure before it has thought about one.</p>
+
+<h2>3. Scratchpad before answer</h2>
+<p>On reasoning-heavy tasks, a scratchpad — a place to think before the deliverable — measurably reduces confident errors. With Claude, XML tags like <code>&lt;scratchpad&gt;</code> work; with other models, "think through the trade-offs in three bullets, then give your recommendation" is enough. The point is separation: reasoning in one place, artefact in another, so the artefact stays clean.</p>
+
+<h2>4. Explicit output schemas</h2>
+<p>If the output feeds a spreadsheet, a database or another model, define the schema. Name the keys, the types and what to return when a value is unknown. Vague JSON is worse than prose: it fails silently downstream. "Return valid JSON with keys deliverable, assumptions and next_steps; use null for unknown values" is the minimum.</p>
+
+<h2>5. Negative constraints</h2>
+<p>Models are better at avoiding specific, checkable things than at achieving vague qualities. "No exclamation marks. Never open with 'I hope this finds you well'. Ban the words revolutionary and seamless." Each ban is testable, which means you can tell whether it worked — and reject the output when it didn't. Bans also survive model upgrades better than adjectives, because they describe observable behaviour.</p>
+
+<h2>6. Self-check instructions</h2>
+<p>One line — "before you answer, check the output against every constraint and fix it silently" — is the cheapest quality gain available. A stronger version tells the model what to do with uncertainty: "if a required input is missing, ask up to three questions instead of inventing an answer." This is the difference between a confident wrong answer and a useful pause.</p>
+
+<h2>7. Role framing with judgement, not adjectives</h2>
+<p>Roles work when they describe priorities and refusals, not status. "You are a staff engineer who blocks on security and can live with ugly code" outperforms "you are a 10x expert engineer" because it tells the model which trade-off to make when two constraints collide. Every real task has that collision; most prompts leave it unresolved.</p>
+
+<h2>Three popular techniques that underperformed</h2>
+<h3>"Act as a world-class expert" (no specifics)</h3>
+<p>In our runs, generic status-pumping changed tone more than quality. What moved output quality was specificity about the audience and the judgement to apply. The magic phrase is not magic; the missing context is the problem.</p>
+<h3>Asking for "10x" or "best possible" output</h3>
+<p>Superlatives give the model no lever. "Best possible" cannot be checked, so it cannot be met. Replace the superlative with a rubric: "every bullet must contain a number, a named party and a next action" is a quality bar. "Make it world-class" is a mood.</p>
+<h3>Longer and longer prompts</h3>
+<p>Length is not rigour. Past a point, extra paragraphs dilute the instructions that matter. We cut prompts that fail into their essential constraints first. If a prompt is over 400 words, ask what you could delete without changing the behaviour — and delete it. Keep the rest for edge cases as a separate prompt.</p>
+
+<h2>How to know if a technique actually worked</h2>
+<p>Run it ten times, score the outputs against a fixed rubric, and keep the results next to the prompt. Without that, you are remembering your best sample, not measuring quality. Our <a href="../guides/prompt-testing.html">testing guide</a> has the exact protocol, and <a href="../how-we-test.html">the lab page</a> shows what it looks like in practice.</p>
+      <div class="author-note">
+        <span class="av">PF</span>
+        <div><b>The PromptFoundry test bench</b><p>Written from the prompts and test logs on this site. Updated 17 Oct 2026. Independent and ad-funded — <a href="../about.html">how we're funded →</a></p></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:22px">
+        <span class="kicker">Next guide</span>
+        <a class="btn ghost" href="prompt-testing.html">How to test your own prompts (without building a lab) →</a>
+      </div>
+    </article>
+  </div>
+  <section class="cta-band">
+    <div class="container">
+      <div class="cta-inner">
+        <div>
+          <span class="kicker">The Friday drop</span>
+          <h2 class="h2" style="margin-top:16px">Five fresh prompts.<br>Tested before they ship.</h2>
+          <p>One email a week with test dates and model notes. No hype.</p>
+        </div>
+        <div class="newsletter">
+          <form data-newsletter novalidate>
+            <label for="nlEmail">Email address</label>
+            <div class="nl-row" style="margin-top:8px">
+              <input id="nlEmail" type="email" placeholder="you@company.com" autocomplete="email" required>
+              <button class="btn light" type="submit">Get the drop →</button>
+            </div>
+            <p class="nl-note" style="margin-top:10px">Free · unsubscribe in one click · no spam</p>
+          </form>
+          <p class="nl-success">You're in. First dispatch lands Friday — check your inbox for the starter set.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="../index.html" aria-label="PromptFoundry home">
+          <svg class="mark" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="#15120D"/><path d="M14 6.6v14.8M6.6 14h14.8M8.8 8.8l10.4 10.4M19.2 8.8L8.8 19.2" stroke="#F5F0E6" stroke-width="1.4" stroke-linecap="round"/><circle cx="14" cy="14" r="2.7" fill="#E34A1B"/></svg>
+          promptfoundry
+        </a>
+        <p>Field-tested prompts, a model-aware builder and a test log. Independent — not affiliated with OpenAI, Anthropic, Google, xAI or Midjourney.</p>
+        <p class="mono" style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)">Updated 17 Oct 2026 · 26 prompts on the bench</p>
+      </div>
+      <div class="foot-col">
+        <h4>Library</h4>
+        <ul>
+          <li><a href="../library.html">All prompts</a></li>
+          <li><a href="../library.html?category=writing">Writing</a></li>
+          <li><a href="../library.html?category=growth">Sales &amp; growth</a></li>
+          <li><a href="../library.html?category=code">Engineering</a></li>
+          <li><a href="../library.html?category=analysis">Analysis</a></li>
+          <li><a href="../library.html?category=design">Design</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Roles</h4>
+        <ul>
+          <li><a href="../roles/marketing.html">Marketers</a></li>
+          <li><a href="../roles/sales.html">Sales teams</a></li>
+          <li><a href="../roles/engineering.html">Engineers</a></li>
+          <li><a href="../roles/product.html">Product managers</a></li>
+          <li><a href="../roles/design.html">Designers</a></li>
+          <li><a href="../roles.html">All role pages</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Site</h4>
+        <ul>
+          <li><a href="../index.html#builder">Prompt Studio</a></li>
+          <li><a href="../index.html#doctor">Prompt Doctor</a></li>
+          <li><a href="../guides.html">Guides</a></li>
+          <li><a href="../how-we-test.html">How we test</a></li>
+          <li><a href="../about.html">About &amp; funding</a></li>
+          <li><a href="../privacy.html">Privacy</a></li>
+          <li><a href="mailto:hello@promptfoundry.example">Advertise / contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 PromptFoundry. Prompt test results are specific to the model versions and inputs listed on each page. Ads and affiliate links may fund the site; they never change a test score. Model names are trademarks of their owners.</p>
+      <div class="legal"><a href="../privacy.html">Privacy</a><a href="../how-we-test.html">Editorial standards</a><a href="../about.html">About</a></div>
+    </div>
+  </div>
+</footer>
+<script src="../assets/data.js"></script>
+<script src="../assets/app.js"></script>
+</body>
+</html>
