@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt engineering guides — structure, techniques and testing | PromptFoundry</title>
+<meta name="description" content="Three practical guides: the anatomy of a reliable prompt, seven prompting techniques that hold up, and how to test your own prompts with a ten-run protocol.">
+<link rel="canonical" href="https://promptfoundry.example/guides.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Prompt engineering guides — structure, techniques and testing | PromptFoundry">
+<meta property="og:description" content="Three practical guides: the anatomy of a reliable prompt, seven prompting techniques that hold up, and how to test your own prompts with a ten-run protocol.">
+<meta property="og:url" content="https://promptfoundry.example/guides.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2315120D'/%3E%3Cpath d='M16 7v18M7 16h18M9.6 9.6l12.8 12.8M22.4 9.6L9.6 22.4' stroke='%23F5F0E6' stroke-width='1.6' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='3.2' fill='%23E34A1B'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Prompt engineering guides — structure, techniques and testing | PromptFoundry","url":"https://promptfoundry.example/guides.html","description":"Three practical guides: the anatomy of a reliable prompt, seven prompting techniques that hold up, and how to test your own prompts with a ten-run protocol."}</script>
+</head>
+<body data-page="guides" data-depth="0">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="index.html" aria-label="PromptFoundry home">
+      <svg class="mark" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="#15120D"/><path d="M14 6.6v14.8M6.6 14h14.8M8.8 8.8l10.4 10.4M19.2 8.8L8.8 19.2" stroke="#F5F0E6" stroke-width="1.4" stroke-linecap="round"/><circle cx="14" cy="14" r="2.7" fill="#E34A1B"/></svg>
+      promptfoundry <span class="beta">beta</span>
+    </a>
+    <div class="nav-drop">
+      <button class="nav-drop-btn" data-drop aria-expanded="false" aria-controls="navDropPanel">Browse
+        <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="nav-drop-panel" id="navDropPanel">
+        <div class="ndp-col">
+          <span class="ndp-label">Browse by prompt type</span>
+          <div data-drop-cats>
+            <a class="ndp-item" href="library.html?category=writing"><i class="ndp-dot" style="background:#C15F3C"></i>Writing<span class="ndp-c">6</span></a>
+            <a class="ndp-item" href="library.html?category=growth"><i class="ndp-dot" style="background:#0E8F6E"></i>Sales & growth<span class="ndp-c">4</span></a>
+            <a class="ndp-item" href="library.html?category=code"><i class="ndp-dot" style="background:#3B6FE0"></i>Engineering<span class="ndp-c">3</span></a>
+            <a class="ndp-item" href="library.html?category=analysis"><i class="ndp-dot" style="background:#A96800"></i>Analysis<span class="ndp-c">3</span></a>
+            <a class="ndp-item" href="library.html?category=design"><i class="ndp-dot" style="background:#5B4B8A"></i>Design<span class="ndp-c">2</span></a>
+            <a class="ndp-item" href="library.html?category=learning"><i class="ndp-dot" style="background:#7C4A6B"></i>Learning<span class="ndp-c">2</span></a>
+            <a class="ndp-item" href="library.html?category=people"><i class="ndp-dot" style="background:#2E5E8C"></i>People<span class="ndp-c">2</span></a>
+            <a class="ndp-item" href="library.html?category=everyday"><i class="ndp-dot" style="background:#8A5A2B"></i>Everyday<span class="ndp-c">4</span></a>
+          </div>
+        </div>
+        <div class="ndp-col">
+          <span class="ndp-label">Pages</span>
+          <a class="ndp-item" href="library.html">Full library</a>
+          <a class="ndp-item" href="index.html#builder">Prompt Studio</a>
+          <a class="ndp-item" href="roles.html" aria-current="page">Role pages</a>
+          <a class="ndp-item" href="guides.html">Guides</a>
+          <a class="ndp-item" href="how-we-test.html">How we test</a>
+          <a class="ndp-item" href="about.html">About</a>
+        </div>
+      </div>
+    </div>
+    <form class="nav-search" role="search" action="library.html" method="get">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="navSearch" name="q" type="search" placeholder="Search prompts…" aria-label="Search prompts" autocomplete="off">
+      <button type="button" class="mic-btn nav-mic" data-voice-target="navSearch" title="Dictate your search" aria-label="Dictate your search by voice">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>
+      </button>
+    </form>
+    <div class="nav-actions">
+      <a class="btn small dark nav-cta-desktop" href="index.html#builder">Open Studio →</a>
+      <button class="menu-btn" data-menu aria-expanded="false" aria-controls="mobileMenu" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <span class="mm-label">Browse by prompt type</span>
+    <div class="mm-cats">
+      <a class="ndp-item" href="library.html?category=writing"><i class="ndp-dot" style="background:#C15F3C"></i>Writing</a>
+      <a class="ndp-item" href="library.html?category=growth"><i class="ndp-dot" style="background:#0E8F6E"></i>Sales & growth</a>
+      <a class="ndp-item" href="library.html?category=code"><i class="ndp-dot" style="background:#3B6FE0"></i>Engineering</a>
+      <a class="ndp-item" href="library.html?category=analysis"><i class="ndp-dot" style="background:#A96800"></i>Analysis</a>
+      <a class="ndp-item" href="library.html?category=design"><i class="ndp-dot" style="background:#5B4B8A"></i>Design</a>
+      <a class="ndp-item" href="library.html?category=learning"><i class="ndp-dot" style="background:#7C4A6B"></i>Learning</a>
+      <a class="ndp-item" href="library.html?category=people"><i class="ndp-dot" style="background:#2E5E8C"></i>People</a>
+      <a class="ndp-item" href="library.html?category=everyday"><i class="ndp-dot" style="background:#8A5A2B"></i>Everyday</a>
+    </div>
+    <span class="mm-label">Pages</span>
+    <a href="library.html">Full library</a>
+    <a href="index.html#builder">Prompt Studio</a>
+    <a href="roles.html" aria-current="page">Role pages</a>
+    <a href="guides.html">Guides</a>
+    <a href="how-we-test.html">How we test</a>
+    <a href="about.html">About</a>
+    <div class="mm-actions"><a class="btn small block" href="index.html#builder">Open the Studio →</a></div>
+  </div>
+</header>
+<main id="main">
+  <section class="library-hero">
+    <div class="container">
+      <span class="kicker">Guides · the method</span>
+      <h1 class="display" style="font-size:clamp(38px,4.6vw,60px);max-width:18ch">Learn the structure, then break the <em>rules.</em></h1>
+      <p class="lede">Three guides on how prompts actually work: the anatomy we use on the bench, the techniques that survived testing, and the habit that keeps a prompt useful after the next model release.</p>
+    </div>
+  </section>
+  <section class="lib-results" style="padding-top:44px">
+    <div class="container">
+      <div class="resource-grid" style="grid-template-columns:1fr;gap:14px">
+        <a class="resource-card" href="guides/prompt-anatomy.html" style="flex-direction:row;gap:22px;align-items:center;padding:24px">
+          <span style="font-family:var(--serif);font-size:34px;color:var(--line);font-weight:600;flex:none">01</span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="rc-tag">Fundamentals · 7–9 min</span>
+            <b style="font-size:21px">The anatomy of a prompt that survives a model upgrade</b>
+            <p>The seven layers every reliable prompt needs — role, objective, context, deliverable, format, constraints and a quality bar — with a worked example you can copy.</p>
+            <span class="card-link" style="margin-top:4px">Read the guide →</span>
+          </span>
+        </a>
+        <a class="resource-card" href="guides/prompting-techniques.html" style="flex-direction:row;gap:22px;align-items:center;padding:24px">
+          <span style="font-family:var(--serif);font-size:34px;color:var(--line);font-weight:600;flex:none">02</span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="rc-tag">Techniques · 7–9 min</span>
+            <b style="font-size:21px">Seven prompting techniques that hold up — and three that don&#39;t</b>
+            <p>Few-shot examples, decomposition, scratchpads, output schemas, negative constraints, self-checks and role framing — tested. Plus the popular techniques that quietly waste tokens.</p>
+            <span class="card-link" style="margin-top:4px">Read the guide →</span>
+          </span>
+        </a>
+        <a class="resource-card" href="guides/prompt-testing.html" style="flex-direction:row;gap:22px;align-items:center;padding:24px">
+          <span style="font-family:var(--serif);font-size:34px;color:var(--line);font-weight:600;flex:none">03</span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="rc-tag">Testing · 7–9 min</span>
+            <b style="font-size:21px">How to test your own prompts (without building a lab)</b>
+            <p>A practical ten-run protocol: freeze the inputs, score against four criteria, log the misses, and re-test when a model ships. Includes a copyable prompt-and-rubric template.</p>
+            <span class="card-link" style="margin-top:4px">Read the guide →</span>
+          </span>
+        </a>
+        <a class="resource-card" href="how-we-test.html" style="flex-direction:row;gap:22px;align-items:center;padding:24px">
+          <span style="font-family:var(--serif);font-size:34px;color:var(--line);font-weight:600;flex:none">04</span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="rc-tag">The lab · methodology</span>
+            <b style="font-size:21px">How we test prompts</b>
+            <p>The full 40-point rubric, the re-test schedule and the public changelog behind every pass rate on this site.</p>
+            <span class="card-link" style="margin-top:4px">Read the methodology →</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="index.html" aria-label="PromptFoundry home">
+          <svg class="mark" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="#15120D"/><path d="M14 6.6v14.8M6.6 14h14.8M8.8 8.8l10.4 10.4M19.2 8.8L8.8 19.2" stroke="#F5F0E6" stroke-width="1.4" stroke-linecap="round"/><circle cx="14" cy="14" r="2.7" fill="#E34A1B"/></svg>
+          promptfoundry
+        </a>
+        <p>Field-tested prompts, a model-aware builder and a test log. Independent — not affiliated with OpenAI, Anthropic, Google, xAI or Midjourney.</p>
+        <p class="mono" style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)">Updated 17 Oct 2026 · 26 prompts on the bench</p>
+      </div>
+      <div class="foot-col">
+        <h4>Library</h4>
+        <ul>
+          <li><a href="library.html">All prompts</a></li>
+          <li><a href="library.html?category=writing">Writing</a></li>
+          <li><a href="library.html?category=growth">Sales &amp; growth</a></li>
+          <li><a href="library.html?category=code">Engineering</a></li>
+          <li><a href="library.html?category=analysis">Analysis</a></li>
+          <li><a href="library.html?category=design">Design</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Roles</h4>
+        <ul>
+          <li><a href="roles/marketing.html">Marketers</a></li>
+          <li><a href="roles/sales.html">Sales teams</a></li>
+          <li><a href="roles/engineering.html">Engineers</a></li>
+          <li><a href="roles/product.html">Product managers</a></li>
+          <li><a href="roles/design.html">Designers</a></li>
+          <li><a href="roles.html">All role pages</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Site</h4>
+        <ul>
+          <li><a href="index.html#builder">Prompt Studio</a></li>
+          <li><a href="index.html#doctor">Prompt Doctor</a></li>
+          <li><a href="guides.html">Guides</a></li>
+          <li><a href="how-we-test.html">How we test</a></li>
+          <li><a href="about.html">About &amp; funding</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="mailto:hello@promptfoundry.example">Advertise / contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 PromptFoundry. Prompt test results are specific to the model versions and inputs listed on each page. Ads and affiliate links may fund the site; they never change a test score. Model names are trademarks of their owners.</p>
+      <div class="legal"><a href="privacy.html">Privacy</a><a href="how-we-test.html">Editorial standards</a><a href="about.html">About</a></div>
+    </div>
+  </div>
+</footer>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
